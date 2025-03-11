@@ -25,6 +25,7 @@
   "devDependencies": {
     "@react-three/drei": "^9.88.17",
     "@react-three/fiber": "^8.15.11",
+    "@tailwindcss/postcss": "^4.0.12",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20.17.24",
     "@types/nodemailer": "^6.4.17",
