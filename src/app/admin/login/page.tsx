@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
-import { Lock, Mail } from 'lucide-react'
+import { Lock, Mail, Loader2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function AdminLogin() {
   const router = useRouter()
-  const { login, isAuthenticated } = useAuth()
+  const { login, isAuthenticated, isLoading } = useAuth()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -16,11 +16,11 @@ export default function AdminLogin() {
   })
 
   useEffect(() => {
-    // If already authenticated, redirect to dashboard
-    if (isAuthenticated) {
+    // If already authenticated and not loading, redirect to dashboard
+    if (isAuthenticated && !isLoading) {
       router.push('/admin/dashboard')
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, isLoading, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,9 +36,19 @@ export default function AdminLogin() {
       }
     } catch (error) {
       toast.error('Login failed')
+      console.error('Login error:', error)
     } finally {
       setLoading(false)
     }
+  }
+
+  // If loading auth state, show loading spinner
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    )
   }
 
   // If authenticated, don't render the login form
@@ -79,6 +89,7 @@ export default function AdminLogin() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 sm:text-sm"
                   placeholder="admin@example.com"
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -102,6 +113,7 @@ export default function AdminLogin() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 sm:text-sm"
                   placeholder="••••••••"
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -110,9 +122,16 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600"
+            className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              'Sign in'
+            )}
           </button>
         </form>
       </div>
