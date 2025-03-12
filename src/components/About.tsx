@@ -1,14 +1,15 @@
 'use client'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useRef } from 'react'
 
+// Import ThreeScene dynamically (SSR disabled)
 const ThreeScene = dynamic(() => import('./ThreeScene'), { ssr: false })
 
 export const About = () => {
   return (
     <section id="about" className="min-h-screen relative py-20 bg-black/40">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
+        
         {/* 3D Animation */}
         <motion.div 
           className="lg:w-1/2 h-[400px]"
@@ -17,6 +18,7 @@ export const About = () => {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
+          {/* Ensure ThreeScene is rendered dynamically without SSR issues */}
           <ThreeScene />
         </motion.div>
 
@@ -63,4 +65,6 @@ export const About = () => {
       </div>
     </section>
   )
-} 
+}
+
+export default About;
