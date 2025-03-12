@@ -2,11 +2,6 @@ import { NextResponse } from 'next/server'
 import { SignJWT } from 'jose'
 import { cookies } from 'next/headers'
 
-// In a real application, these would be stored securely in environment variables
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin@example.com'
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
-
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json()
@@ -19,8 +14,12 @@ export async function POST(request: Request) {
       )
     }
 
+    // Get credentials from environment variables
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin@example.com'
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
+    const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+
     // Validate credentials
-    // In a real application, you would hash the password and compare with a database
     if (email !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
       return NextResponse.json(
         { message: 'Invalid credentials' },
@@ -44,7 +43,7 @@ export async function POST(request: Request) {
       path: '/',
     })
 
-    return NextResponse.json({ token })
+    return NextResponse.json({ success: true, token })
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(

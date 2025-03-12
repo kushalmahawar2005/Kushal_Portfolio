@@ -1,35 +1,32 @@
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
 import AdminLayoutClient from './AdminLayoutClient'
-import { Toaster } from 'react-hot-toast'
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const cookieStore = cookies()
-  const adminToken = cookieStore.get('admin_token')
-  const isLoginPage = typeof window !== 'undefined' && window.location.pathname === '/admin/login'
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const { isAuthenticated } = useAuth()
+  const isLoginPage = pathname === '/admin/login'
 
-  if (!adminToken && !isLoginPage) {
-    redirect('/admin/login')
+  useEffect(() => {
+    if (!isAuthenticated && !isLoginPage) {
+      router.push('/admin/login')
+    }
+  }, [isAuthenticated, isLoginPage, router])
+
+  // Show nothing while checking authentication
+  if (!isAuthenticated && !isLoginPage) {
+    return null
   }
 
-  // If on login page, don't wrap with AdminLayoutClient
+  // Show only children for login page
   if (isLoginPage) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
-        <Toaster position="top-right" />
-        {children}
-      </div>
-    )
+    return <>{children}</>
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Toaster position="top-right" />
-      <AdminLayoutClient>{children}</AdminLayoutClient>
-    </div>
-  )
+  // Show admin layout with navigation for authenticated users
+  return <AdminLayoutClient>{children}</AdminLayoutClient>
 } 

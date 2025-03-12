@@ -1,103 +1,73 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import {
-  BarChart3,
-  Users,
-  FolderKanban,
-  MessageSquare,
-  ArrowRight,
-} from 'lucide-react'
+import { LayoutDashboard, Briefcase, GraduationCap, Code2, Mail } from 'lucide-react'
 import Link from 'next/link'
 
-interface Stats {
-  totalProjects: number
-  totalSkills: number
-  totalExperiences: number
-  totalMessages: number
+interface DashboardCard {
+  title: string
+  description: string
+  href: string
+  icon: any
+  color: string
 }
 
+const dashboardCards: DashboardCard[] = [
+  {
+    title: 'Projects',
+    description: 'Manage your portfolio projects',
+    href: '/admin/projects',
+    icon: Briefcase,
+    color: 'bg-blue-500',
+  },
+  {
+    title: 'Experience',
+    description: 'Update your work experience',
+    href: '/admin/experience',
+    icon: GraduationCap,
+    color: 'bg-green-500',
+  },
+  {
+    title: 'Skills',
+    description: 'Edit your technical skills',
+    href: '/admin/skills',
+    icon: Code2,
+    color: 'bg-purple-500',
+  },
+  {
+    title: 'Messages',
+    description: 'View contact form messages',
+    href: '/admin/messages',
+    icon: Mail,
+    color: 'bg-yellow-500',
+  },
+]
+
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats>({
-    totalProjects: 0,
-    totalSkills: 0,
-    totalExperiences: 0,
-    totalMessages: 0,
-  })
-
-  useEffect(() => {
-    // In a real app, fetch these stats from your API
-    setStats({
-      totalProjects: 12,
-      totalSkills: 15,
-      totalExperiences: 5,
-      totalMessages: 8,
-    })
-  }, [])
-
-  const cards = [
-    {
-      label: 'Skills',
-      value: stats.totalSkills,
-      icon: BarChart3,
-      href: '/admin/skills',
-      color: 'bg-blue-500',
-    },
-    {
-      label: 'Projects',
-      value: stats.totalProjects,
-      icon: FolderKanban,
-      href: '/admin/projects',
-      color: 'bg-green-500',
-    },
-    {
-      label: 'Experiences',
-      value: stats.totalExperiences,
-      icon: Users,
-      href: '/admin/experiences',
-      color: 'bg-purple-500',
-    },
-    {
-      label: 'Messages',
-      value: stats.totalMessages,
-      icon: MessageSquare,
-      href: '/admin/messages',
-      color: 'bg-yellow-500',
-    },
-  ]
-
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Welcome to your portfolio admin dashboard
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Manage your portfolio content and view statistics
+          Welcome to your admin dashboard. Manage your portfolio content from here.
         </p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.map((card) => (
+        {dashboardCards.map((card) => (
           <Link
-            key={card.label}
+            key={card.href}
             href={card.href}
-            className="group relative overflow-hidden rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:bg-gray-800"
+            className="group block space-y-1.5 rounded-lg bg-white p-6 shadow transition-colors hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
-            <div className="flex justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {card.label}
-                </p>
-                <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  {card.value}
-                </p>
+            <div className="flex items-center space-x-2">
+              <div
+                className={`rounded-lg p-2 ${card.color} bg-opacity-10 group-hover:bg-opacity-20`}
+              >
+                <card.icon className={`h-6 w-6 ${card.color} text-opacity-90`} />
               </div>
-              <div className={`rounded-full ${card.color} p-3`}>
-                <card.icon className="h-6 w-6 text-white" />
-              </div>
+              <h2 className="font-semibold text-gray-900 dark:text-white">{card.title}</h2>
             </div>
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-blue-500" />
+            <p className="text-sm text-gray-600 dark:text-gray-400">{card.description}</p>
           </Link>
         ))}
       </div>

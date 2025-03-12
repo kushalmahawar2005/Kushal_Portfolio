@@ -2,33 +2,63 @@
 
 import { useState } from 'react'
 import { Plus, Pencil, Trash2 } from 'lucide-react'
-import { toast } from 'react-hot-toast'
 
 interface Skill {
-  id: number
+  id: string
   name: string
-  level: number
   category: string
+  proficiency: number
 }
 
-export default function SkillsPage() {
-  const [skills, setSkills] = useState<Skill[]>([
-    { id: 1, name: 'React', level: 90, category: 'Frontend' },
-    { id: 2, name: 'Node.js', level: 85, category: 'Backend' },
-    // Add more initial skills as needed
-  ])
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingSkill, setEditingSkill] = useState<Skill | null>(null)
+// Sample data (replace with your actual data source)
+const initialSkills: Skill[] = [
+  {
+    id: '1',
+    name: 'React',
+    category: 'Frontend',
+    proficiency: 90,
+  },
+  {
+    id: '2',
+    name: 'Node.js',
+    category: 'Backend',
+    proficiency: 85,
+  },
+  {
+    id: '3',
+    name: 'TypeScript',
+    category: 'Languages',
+    proficiency: 88,
+  },
+]
 
-  const handleDelete = async (id: number) => {
-    try {
-      // In a real app, make an API call to delete the skill
-      setSkills(skills.filter(skill => skill.id !== id))
-      toast.success('Skill deleted successfully')
-    } catch (error) {
-      toast.error('Failed to delete skill')
-    }
+const categories = ['Frontend', 'Backend', 'Languages', 'Tools', 'Other']
+
+export default function AdminSkills() {
+  const [skills, setSkills] = useState<Skill[]>(initialSkills)
+
+  const handleAddSkill = () => {
+    // Implement skill creation logic
+    console.log('Add skill')
   }
+
+  const handleEditSkill = (id: string) => {
+    // Implement skill editing logic
+    console.log('Edit skill', id)
+  }
+
+  const handleDeleteSkill = (id: string) => {
+    // Implement skill deletion logic
+    console.log('Delete skill', id)
+  }
+
+  const skillsByCategory = categories.reduce((acc, category) => {
+    const categorySkills = skills.filter((skill) => skill.category === category)
+    if (categorySkills.length > 0) {
+      acc[category] = categorySkills
+    }
+    return acc
+  }, {} as Record<string, Skill[]>)
 
   return (
     <div className="space-y-6">
@@ -36,83 +66,63 @@ export default function SkillsPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Skills</h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Manage your skills and expertise
+            Manage your technical skills
           </p>
         </div>
         <button
-          onClick={() => {
-            setEditingSkill(null)
-            setIsModalOpen(true)
-          }}
-          className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
+          onClick={handleAddSkill}
+          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="h-4 w-4" />
           Add Skill
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-gray-50 dark:bg-gray-800">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Level
-              </th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-            {skills.map((skill) => (
-              <tr key={skill.id}>
-                <td className="whitespace-nowrap px-6 py-4">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white">
-                    {skill.name}
-                  </div>
-                </td>
-                <td className="whitespace-nowrap px-6 py-4">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {skill.category}
-                  </div>
-                </td>
-                <td className="whitespace-nowrap px-6 py-4">
-                  <div className="w-full max-w-xs">
-                    <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                      <div
-                        className="h-2 rounded-full bg-blue-600 dark:bg-blue-500"
-                        style={{ width: `${skill.level}%` }}
-                      />
+      <div className="space-y-6">
+        {Object.entries(skillsByCategory).map(([category, categorySkills]) => (
+          <div key={category}>
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+              {category}
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {categorySkills.map((skill) => (
+                <div
+                  key={skill.id}
+                  className="group relative rounded-lg bg-white p-4 shadow dark:bg-gray-800"
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-gray-900 dark:text-white">{skill.name}</h3>
+                    <div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                      <button
+                        onClick={() => handleEditSkill(skill.id)}
+                        className="rounded-lg bg-white p-1.5 text-gray-600 shadow-md hover:text-blue-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-blue-500"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSkill(skill.id)}
+                        className="rounded-lg bg-white p-1.5 text-gray-600 shadow-md hover:text-red-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-red-500"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                  <button
-                    onClick={() => {
-                      setEditingSkill(skill)
-                      setIsModalOpen(true)
-                    }}
-                    className="mr-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(skill.id)}
-                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <div className="mt-2">
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                      <div
+                        className="h-full rounded-full bg-blue-600 dark:bg-blue-500"
+                        style={{ width: `${skill.proficiency}%` }}
+                      />
+                    </div>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                      Proficiency: {skill.proficiency}%
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

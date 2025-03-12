@@ -1,45 +1,47 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Pencil, Trash2, ExternalLink } from 'lucide-react'
-import { toast } from 'react-hot-toast'
+import { Plus, Pencil, Trash2 } from 'lucide-react'
 
 interface Project {
-  id: number
+  id: string
   title: string
   description: string
   image: string
-  technologies: string[]
-  liveUrl?: string
+  tags: string[]
+  demoUrl?: string
   githubUrl?: string
-  featured: boolean
 }
 
-export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: 1,
-      title: 'Portfolio Website',
-      description: 'Personal portfolio website built with Next.js and TailwindCSS',
-      image: '/projects/portfolio.jpg',
-      technologies: ['Next.js', 'React', 'TailwindCSS'],
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example/portfolio',
-      featured: true,
-    },
-    // Add more initial projects as needed
-  ])
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingProject, setEditingProject] = useState<Project | null>(null)
+// Sample data (replace with your actual data source)
+const initialProjects: Project[] = [
+  {
+    id: '1',
+    title: 'Portfolio Website',
+    description: 'A personal portfolio website built with Next.js and Tailwind CSS',
+    image: '/projects/portfolio.png',
+    tags: ['Next.js', 'React', 'Tailwind CSS'],
+    demoUrl: 'https://portfolio.example.com',
+    githubUrl: 'https://github.com/example/portfolio',
+  },
+]
 
-  const handleDelete = async (id: number) => {
-    try {
-      // In a real app, make an API call to delete the project
-      setProjects(projects.filter(project => project.id !== id))
-      toast.success('Project deleted successfully')
-    } catch (error) {
-      toast.error('Failed to delete project')
-    }
+export default function AdminProjects() {
+  const [projects, setProjects] = useState<Project[]>(initialProjects)
+
+  const handleAddProject = () => {
+    // Implement project creation logic
+    console.log('Add project')
+  }
+
+  const handleEditProject = (id: string) => {
+    // Implement project editing logic
+    console.log('Edit project', id)
+  }
+
+  const handleDeleteProject = (id: string) => {
+    // Implement project deletion logic
+    console.log('Delete project', id)
   }
 
   return (
@@ -52,13 +54,10 @@ export default function ProjectsPage() {
           </p>
         </div>
         <button
-          onClick={() => {
-            setEditingProject(null)
-            setIsModalOpen(true)
-          }}
-          className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
+          onClick={handleAddProject}
+          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="h-4 w-4" />
           Add Project
         </button>
       </div>
@@ -67,74 +66,46 @@ export default function ProjectsPage() {
         {projects.map((project) => (
           <div
             key={project.id}
-            className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            className="group relative overflow-hidden rounded-lg bg-white shadow dark:bg-gray-800"
           >
-            <div className="aspect-w-16 aspect-h-9">
+            <div className="aspect-video w-full overflow-hidden">
               <img
                 src={project.image}
                 alt={project.title}
-                className="h-48 w-full object-cover"
+                className="h-full w-full object-cover"
               />
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {project.title}
               </h3>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 {project.description}
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
                   <span
-                    key={tech}
-                    className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                    key={tag}
+                    className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
                   >
-                    {tech}
+                    {tag}
                   </span>
                 ))}
               </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div className="space-x-2">
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                    >
-                      <ExternalLink className="mr-1 h-4 w-4" />
-                      Live Demo
-                    </a>
-                  )}
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300"
-                    >
-                      GitHub
-                    </a>
-                  )}
-                </div>
-                <div className="space-x-2">
-                  <button
-                    onClick={() => {
-                      setEditingProject(project)
-                      setIsModalOpen(true)
-                    }}
-                    className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(project.id)}
-                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+            </div>
+            <div className="absolute right-2 top-2 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+              <button
+                onClick={() => handleEditProject(project.id)}
+                className="rounded-lg bg-white p-2 text-gray-600 shadow-md hover:text-blue-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-blue-500"
+              >
+                <Pencil className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => handleDeleteProject(project.id)}
+                className="rounded-lg bg-white p-2 text-gray-600 shadow-md hover:text-red-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-red-500"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
             </div>
           </div>
         ))}

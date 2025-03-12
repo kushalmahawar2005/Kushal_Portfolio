@@ -1,46 +1,49 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import { Lock, Mail } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function AdminLogin() {
   const router = useRouter()
+  const { login, isAuthenticated } = useAuth()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
+  useEffect(() => {
+    // If already authenticated, redirect to dashboard
+    if (isAuthenticated) {
+      router.push('/admin/dashboard')
+    }
+  }, [isAuthenticated, router])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed')
+      const success = await login(formData.email, formData.password)
+      if (success) {
+        toast.success('Login successful!')
+        router.push('/admin/dashboard')
+      } else {
+        toast.error('Invalid credentials')
       }
-
-      // Set cookie and redirect
-      document.cookie = `admin_token=${data.token}; path=/; max-age=86400; secure; samesite=strict`
-      toast.success('Login successful!')
-      router.push('/admin/dashboard')
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Login failed')
+      toast.error('Login failed')
     } finally {
       setLoading(false)
     }
+  }
+
+  // If authenticated, don't render the login form
+  if (isAuthenticated) {
+    return null
   }
 
   return (

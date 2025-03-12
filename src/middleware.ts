@@ -16,12 +16,27 @@ export async function middleware(request: NextRequest) {
   if (isLoginPath && adminToken) {
     try {
       // Verify JWT token
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key')
+      const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+      const secret = new TextEncoder().encode(JWT_SECRET)
       await jwtVerify(adminToken.value, secret)
       return NextResponse.redirect(new URL('/admin/dashboard', request.url))
     } catch {
       // If token is invalid, clear it and continue to login page
       const response = NextResponse.next()
+      response.cookies.delete('admin_token')
+      return response
+    }
+  }
+
+  // For admin paths (except login), verify the token
+  if (isAdminPath && !isLoginPath && adminToken) {
+    try {
+      const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+      const secret = new TextEncoder().encode(JWT_SECRET)
+      await jwtVerify(adminToken.value, secret)
+    } catch {
+      // If token is invalid, redirect to login
+      const response = NextResponse.redirect(new URL('/admin/login', request.url))
       response.cookies.delete('admin_token')
       return response
     }
