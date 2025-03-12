@@ -1,26 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
-import { Lock, Mail, Loader2 } from 'lucide-react'
+import { Lock, Mail } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function AdminLogin() {
   const router = useRouter()
-  const { login, isAuthenticated, isLoading } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
-  useEffect(() => {
-    // If already authenticated and not loading, redirect to dashboard
-    if (isAuthenticated && !isLoading) {
-      router.push('/admin/dashboard')
-    }
-  }, [isAuthenticated, isLoading, router])
+  // If already authenticated, redirect to dashboard
+  if (isAuthenticated) {
+    router.replace('/admin/dashboard')
+    return null
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,30 +29,15 @@ export default function AdminLogin() {
       const success = await login(formData.email, formData.password)
       if (success) {
         toast.success('Login successful!')
-        router.push('/admin/dashboard')
+        router.replace('/admin/dashboard')
       } else {
-        toast.error('Invalid credentials')
+        toast.error('Invalid credentials. Use: admin@example.com / admin123')
       }
     } catch (error) {
-      toast.error('Login failed')
-      console.error('Login error:', error)
+      toast.error('Login failed. Please try again.')
     } finally {
       setLoading(false)
     }
-  }
-
-  // If loading auth state, show loading spinner
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-      </div>
-    )
-  }
-
-  // If authenticated, don't render the login form
-  if (isAuthenticated) {
-    return null
   }
 
   return (
@@ -65,6 +49,9 @@ export default function AdminLogin() {
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Please sign in to access the admin panel
+          </p>
+          <p className="mt-2 text-xs text-blue-600 dark:text-blue-400">
+            Use: admin@example.com / admin123
           </p>
         </div>
 
@@ -124,14 +111,7 @@ export default function AdminLogin() {
             disabled={loading}
             className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
-              </>
-            ) : (
-              'Sign in'
-            )}
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
       </div>
