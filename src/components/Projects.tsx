@@ -7,10 +7,10 @@ const projects = [
   {
     title: "E-Commerce Platform",
     description: "A full-stack e-commerce platform built with Next.js, MongoDB, and Stripe integration.",
-    image: "/projects/placeholder-dark.jpg",
+    image: "/img/projects/ecommerce.jpg",
     tags: ["Next.js", "MongoDB", "Stripe", "TailwindCSS"],
-    link: "https://github.com/yourusername/ecommerce",
-    demo: "https://ecommerce-demo.com"
+    link: "https://github.com/kushalmahawar2005/BMW-e-commerce-site.git",
+    demo: "https://bastiramjimithaiwale.vercel.app/"
   },
   {
     title: "AI Chat Application",
@@ -201,7 +201,7 @@ export const Projects = () => {
           viewport={{ once: true }}
         >
           <motion.a
-            href="https://github.com/yourusername"
+            href="https://github.com/kushalmahawar2005"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 rounded-full font-medium transition-all"

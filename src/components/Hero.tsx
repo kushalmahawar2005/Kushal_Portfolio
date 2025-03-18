@@ -167,7 +167,7 @@ export const Hero = () => {
           <div className="w-40 h-40 mx-auto rounded-full border-4 border-blue-500/30 p-2">
             <div className="w-full h-full rounded-full border-4 border-blue-400/40 p-2">
               <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <span className="text-4xl">YN</span>
+                <span className="text-4xl">KM</span>
               </div>
             </div>
           </div>
