@@ -1,0 +1,86 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce Website",
+      "description": "A full-stack e-commerce platform with React and Node.js",
+      "image": "/projects/ecommerce.jpg",
+      "demoUrl": "https://ecommerce-demo.com",
+      "githubUrl": "https://github.com/username/ecommerce",
+      "category": "Major",
+      "status": "Completed",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Task Manager",
+      "description": "A simple task management application",
+      "image": "/projects/taskmanager.jpg",
+      "demoUrl": "https://taskmanager-demo.com",
+      "githubUrl": "https://github.com/username/taskmanager",
+      "category": "Minor",
+      "status": "In Progress",
+      "createdAt": "2024-02-01T15:30:00Z"
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "name": "React",
+      "category": "Frontend",
+      "level": 90
+    },
+    {
+      "id": 2,
+      "name": "Node.js",
+      "category": "Backend",
+      "level": 85
+    },
+    {
+      "id": 3,
+      "name": "MongoDB",
+      "category": "Database",
+      "level": 80
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "title": "Senior Developer",
+      "company": "Tech Corp",
+      "type": "Full-time",
+      "startDate": "2022-01-01",
+      "endDate": null,
+      "description": "Leading development team and implementing new features"
+    },
+    {
+      "id": 2,
+      "title": "Web Developer",
+      "company": "Web Solutions",
+      "type": "Full-time",
+      "startDate": "2020-06-01",
+      "endDate": "2021-12-31",
+      "description": "Developed and maintained web applications"
+    }
+  ],
+  "certificates": [
+    {
+      "id": 1,
+      "title": "AWS Certified Developer",
+      "issuer": "Amazon Web Services",
+      "date": "2023-05-15",
+      "url": "https://aws.amazon.com/certificate"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "subject": "Job Opportunity",
+      "message": "I would like to discuss a potential job opportunity with you.",
+      "date": "2024-03-10T09:00:00Z",
+      "read": false
+    }
+  ]
+} 

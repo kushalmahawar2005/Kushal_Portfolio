@@ -3,6 +3,7 @@ import React from 'react';
 import { Container } from '@/components/Container';
 import dynamic from 'next/dynamic';
 import { FiDownload } from 'react-icons/fi';
+import Image from 'next/image'
 
 const ThreeScene = dynamic(() => import('./ThreeScene'), { ssr: false });
 
@@ -14,40 +15,52 @@ export default function About() {
   };
 
   return (
-    <Container>
-      <div className="flex flex-col md:flex-row items-center justify-between gap-12 min-h-screen py-12">
-        <div className="flex-1 h-[500px]">
-          <ThreeScene />
-        </div>
-        <div className="flex-1 space-y-8">
-          <div className="space-y-6">
-            <div className="relative">
-              <h1 className="text-5xl font-bold text-white">
-                About Me
-                <div className="absolute -bottom-2 left-0 w-1/2 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-              </h1>
-            </div>
-            <p className="text-lg leading-relaxed text-gray-300">
-              I am a passionate full-stack developer with expertise in modern web technologies.
-              I love building beautiful, responsive, and user-friendly applications.
-            </p>
+    <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Photo Section */}
+          <div className="relative w-full aspect-square max-w-md mx-auto">
+            <Image
+              src="/profile.jpg"
+              alt="Kushal's Photo"
+              fill
+              className="object-cover rounded-2xl shadow-xl"
+              priority
+            />
           </div>
-          
-          <div className="space-y-4 bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
-            <h2 className="text-2xl font-semibold text-white">Download My CV</h2>
-            <p className="text-gray-300">
-              Get a detailed overview of my skills, experience, and achievements.
+
+          {/* Content Section */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              About Me
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              I am a passionate full-stack developer with expertise in modern web technologies.
+              My journey in software development started with a curiosity to build things that make a difference.
             </p>
-            <button
-              onClick={handleDownloadCV}
-              className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 group"
-            >
-              <FiDownload className="w-5 h-5 group-hover:animate-bounce" />
-              <span className="font-medium">Download CV</span>
-            </button>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              With a strong foundation in both frontend and backend development,
+              I create scalable and user-friendly applications that solve real-world problems.
+            </p>
+            <div className="flex gap-4">
+              <a
+                href="/resume.pdf"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download Resume
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+              >
+                Contact Me
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </Container>
+    </section>
   );
 }

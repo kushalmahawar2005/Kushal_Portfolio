@@ -16,26 +16,37 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
-    setMounted(true)
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
-      setTheme(savedTheme)
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark')
-    } else {
-      // Check system preference
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setTheme(systemTheme)
-      document.documentElement.classList.toggle('dark', systemTheme === 'dark')
+    try {
+      setMounted(true)
+      const savedTheme = localStorage.getItem('theme') as Theme
+      if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
+        setTheme(savedTheme)
+        document.documentElement.classList.toggle('dark', savedTheme === 'dark')
+      } else {
+        // Check system preference
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        setTheme(systemTheme)
+        document.documentElement.classList.toggle('dark', systemTheme === 'dark')
+      }
+    } catch (error) {
+      console.error('Error accessing theme preferences:', error)
+      // Fallback to light theme
+      setTheme('light')
     }
   }, [])
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark')
+    try {
+      const newTheme = theme === 'light' ? 'dark' : 'light'
+      setTheme(newTheme)
+      localStorage.setItem('theme', newTheme)
+      document.documentElement.classList.toggle('dark')
+    } catch (error) {
+      console.error('Error toggling theme:', error)
+    }
   }
 
+  // Prevent flash of unstyled content
   if (!mounted) {
     return null
   }

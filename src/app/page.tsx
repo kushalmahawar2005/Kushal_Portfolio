@@ -1,4 +1,5 @@
 import About from '@/components/About';
+import { Certificates } from '@/components/Certificates';
 import { Contact } from '@/components/Contact';
 import { Hero } from '@/components/Hero';
 import { Projects } from '@/components/Projects';
@@ -11,6 +12,7 @@ export default function Home() {
       <About />
       <Skills />
       <Projects />
+      <Certificates />
       <Contact />
     </main>
   )
