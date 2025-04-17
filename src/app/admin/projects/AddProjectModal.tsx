@@ -6,11 +6,11 @@ import { X, Upload, Plus, Trash } from 'lucide-react'
 interface AddProjectModalProps {
   isOpen: boolean
   onClose: () => void
-  onSave: (project: any) => void
+  onSubmit: (projectData: any) => Promise<void>
   initialData?: any
 }
 
-export default function AddProjectModal({ isOpen, onClose, onSave, initialData }: AddProjectModalProps) {
+export default function AddProjectModal({ isOpen, onClose, onSubmit, initialData }: AddProjectModalProps) {
   const [formData, setFormData] = useState({
     id: '',
     title: '',
@@ -93,9 +93,7 @@ export default function AddProjectModal({ isOpen, onClose, onSave, initialData }
     setLoading(true)
     
     try {
-      // Here you would typically save to your backend
-      // For now, we'll just call the onSave callback
-      onSave(formData)
+      await onSubmit(formData)
       onClose()
     } catch (error) {
       console.error('Error saving project:', error)
