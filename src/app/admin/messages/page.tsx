@@ -98,7 +98,7 @@ export default function MessagesPage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Messages</h1>
         <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Manage your contact form messages
-          </p>
+        </p>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -167,8 +167,8 @@ export default function MessagesPage() {
               key={message.id}
                 className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 ${
                   !message.read ? 'bg-blue-50 dark:bg-blue-900/10' : ''
-                }`}
-              >
+              }`}
+            >
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
                     <div className="h-8 w-8 flex-shrink-0">
