@@ -1,6 +1,7 @@
 'use client'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import * as THREE from 'three'
 
 const skills = {
   frontend: {
@@ -39,6 +40,133 @@ const skills = {
       { name: "Agile", level: 80, color: "#009688" }
     ]
   }
+}
+
+const SkillSphere = ({ skill }: { skill: typeof skills.frontend.items[0] }) => {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const [hovered, setHovered] = useState(false)
+
+  useEffect(() => {
+    if (!meshRef.current) return
+
+    const animate = () => {
+      if (meshRef.current) {
+        meshRef.current.rotation.x += 0.01
+        meshRef.current.rotation.y += 0.01
+      }
+      requestAnimationFrame(animate)
+    }
+    animate()
+  }, [])
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      className="relative"
+    >
+      <div className="w-16 h-16 rounded-full" style={{ backgroundColor: skill.color }}>
+        <span className="absolute inset-0 flex items-center justify-center text-white font-bold">
+          {skill.name}
+        </span>
+      </div>
+      {hovered && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 px-2 py-1 rounded text-sm"
+        >
+          {skill.level}%
+        </motion.div>
+      )}
+    </motion.div>
+  )
+}
+
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    if (!canvasRef.current) return
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const particles: Particle[] = []
+    const particleCount = 100
+
+    class Particle {
+      x: number
+      y: number
+      size: number
+      speedX: number
+      speedY: number
+      color: string
+
+      constructor() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+        this.size = Math.random() * 3 + 1
+        this.speedX = Math.random() * 2 - 1
+        this.speedY = Math.random() * 2 - 1
+        this.color = `rgba(255, 255, 255, ${Math.random() * 0.5})`
+      }
+
+      update() {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x > canvas.width) this.x = 0
+        if (this.x < 0) this.x = canvas.width
+        if (this.y > canvas.height) this.y = 0
+        if (this.y < 0) this.y = canvas.height
+      }
+
+      draw() {
+        if (!ctx) return
+        ctx.fillStyle = this.color
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx.fill()
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+
+    const animate = () => {
+      if (!ctx) return
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+      requestAnimationFrame(animate)
+    }
+
+    animate()
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full opacity-30 pointer-events-none"
+    />
+  )
 }
 
 const SkillCard = ({ category, items }: { category: typeof skills.frontend; items: typeof skills.frontend.items }) => {
@@ -94,24 +222,9 @@ const SkillCard = ({ category, items }: { category: typeof skills.frontend; item
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
           {items.map((skill) => (
-            <div key={skill.name} className="relative">
-              <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium">{skill.name}</span>
-                <span className="text-sm text-gray-400">{skill.level}%</span>
-              </div>
-              <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ backgroundColor: skill.color }}
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  viewport={{ once: true }}
-                />
-              </div>
-            </div>
+            <SkillSphere key={skill.name} skill={skill} />
           ))}
         </div>
       </div>
@@ -129,8 +242,9 @@ const SkillCard = ({ category, items }: { category: typeof skills.frontend; item
 
 export const Skills = () => {
   return (
-    <section id="skills" className="py-20 bg-black/30">
-      <div className="container mx-auto px-4">
+    <section id="skills" className="relative py-20 bg-black/30 overflow-hidden">
+      <ParticleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
