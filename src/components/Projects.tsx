@@ -20,6 +20,14 @@ const projects = {
       tags: ["React", "Node.js", "Socket.io", "OpenAI"],
       link: "https://github.com/yourusername/ai-chat",
       demo: "https://ai-chat-demo.com"
+    },
+    {
+      title: "Portfolio Website",
+      description: "Interactive portfolio website with 3D animations and modern UI design.",
+      image: "/projects/placeholder-dark.jpg",
+      tags: ["Next.js", "Three.js", "Framer Motion", "TailwindCSS"],
+      link: "https://github.com/kushalmahawar2005/Kushal_Portfolio",
+      demo: "https://kushal-portfolio-one.vercel.app"
     }
   ],
   minor: [
@@ -30,6 +38,22 @@ const projects = {
       tags: ["React", "Firebase", "Material-UI", "Redux"],
       link: "https://github.com/yourusername/task-manager",
       demo: "https://task-manager-demo.com"
+    },
+    {
+      title: "Weather Dashboard",
+      description: "Real-time weather information dashboard with location-based forecasts.",
+      image: "/projects/placeholder-dark.jpg",
+      tags: ["React", "OpenWeather API", "Chart.js", "Geolocation"],
+      link: "https://github.com/yourusername/weather-dashboard",
+      demo: "https://weather-dashboard-demo.com"
+    },
+    {
+      title: "Recipe Finder",
+      description: "Search and discover recipes with ingredient-based filtering and favorites.",
+      image: "/projects/placeholder-dark.jpg",
+      tags: ["React", "Edamam API", "LocalStorage", "CSS Modules"],
+      link: "https://github.com/yourusername/recipe-finder",
+      demo: "https://recipe-finder-demo.com"
     }
   ]
 }
