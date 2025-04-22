@@ -3,34 +3,38 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 
-const projects = [
-  {
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce platform built with Next.js, MongoDB, and Stripe integration.",
-    image: "/img/projects/ecommerce.jpg",
-    tags: ["Next.js", "MongoDB", "Stripe", "TailwindCSS"],
-    link: "https://github.com/kushalmahawar2005/BMW-e-commerce-site.git",
-    demo: "https://bastiramjimithaiwale.vercel.app/"
-  },
-  {
-    title: "AI Chat Application",
-    description: "Real-time chat application with AI-powered responses and user authentication.",
-    image: "/projects/placeholder-dark.jpg",
-    tags: ["React", "Node.js", "Socket.io", "OpenAI"],
-    link: "https://github.com/yourusername/ai-chat",
-    demo: "https://ai-chat-demo.com"
-  },
-  {
-    title: "Task Management System",
-    description: "A collaborative task management system with real-time updates and team features.",
-    image: "/projects/placeholder-dark.jpg",
-    tags: ["React", "Firebase", "Material-UI", "Redux"],
-    link: "https://github.com/yourusername/task-manager",
-    demo: "https://task-manager-demo.com"
-  }
-]
+const projects = {
+  major: [
+    {
+      title: "E-Commerce Platform",
+      description: "A full-stack e-commerce platform built with Next.js, MongoDB, and Stripe integration.",
+      image: "/img/projects/ecommerce.jpg",
+      tags: ["Next.js", "MongoDB", "Stripe", "TailwindCSS"],
+      link: "https://github.com/kushalmahawar2005/BMW-e-commerce-site.git",
+      demo: "https://bastiramjimithaiwale.vercel.app/"
+    },
+    {
+      title: "AI Chat Application",
+      description: "Real-time chat application with AI-powered responses and user authentication.",
+      image: "/projects/placeholder-dark.jpg",
+      tags: ["React", "Node.js", "Socket.io", "OpenAI"],
+      link: "https://github.com/yourusername/ai-chat",
+      demo: "https://ai-chat-demo.com"
+    }
+  ],
+  minor: [
+    {
+      title: "Task Management System",
+      description: "A collaborative task management system with real-time updates and team features.",
+      image: "/projects/placeholder-dark.jpg",
+      tags: ["React", "Firebase", "Material-UI", "Redux"],
+      link: "https://github.com/yourusername/task-manager",
+      demo: "https://task-manager-demo.com"
+    }
+  ]
+}
 
-const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
+const ProjectCard = ({ project }: { project: typeof projects['major'][0] }) => {
   const [imageLoading, setImageLoading] = useState(true)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -166,6 +170,8 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
 }
 
 export const Projects = () => {
+  const [activeTab, setActiveTab] = useState<'major' | 'minor'>('major');
+
   return (
     <section id="projects" className="py-20 bg-black/20">
       <div className="container mx-auto px-4">
@@ -187,11 +193,47 @@ export const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
+        {/* Project Type Tabs */}
+        <div className="flex justify-center gap-4 mb-12">
+          <motion.button
+            onClick={() => setActiveTab('major')}
+            className={`px-6 py-2 rounded-full font-medium transition-all ${
+              activeTab === 'major'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                : 'bg-white/10 hover:bg-white/20'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Major Projects
+          </motion.button>
+          <motion.button
+            onClick={() => setActiveTab('minor')}
+            className={`px-6 py-2 rounded-full font-medium transition-all ${
+              activeTab === 'minor'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                : 'bg-white/10 hover:bg-white/20'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Minor Projects
+          </motion.button>
+        </div>
+
+        {/* Projects Grid */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {projects[activeTab].map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
           className="text-center mt-12"
