@@ -6,9 +6,9 @@ import { useState } from 'react'
 const projects = {
   major: [
     {
-      title: "E-Commerce Platform",
+      title: "E-Commerce Platform (WORKING ON IT)",
       description: "A full-stack e-commerce platform built with Next.js, MongoDB, and Stripe integration.",
-      image: "/img/projects/ecommerce.jpg",
+      image: "/img/projects/e-commerce.jpg",
       tags: ["Next.js", "MongoDB", "Stripe", "TailwindCSS"],
       link: "https://github.com/kushalmahawar2005/BMW-e-commerce-site.git",
       demo: "https://bastiramjimithaiwale.vercel.app/"
