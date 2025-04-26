@@ -6,31 +6,31 @@ import { useState } from 'react'
 
 const certificates = [
   {
-    title: "Web Development Bootcamp",
+    title: "JavaScript, jQuery and React Bootcamp",
     issuer: "Udemy",
-    date: "2023",
-    image: "/img/certificates/web-dev.jpg",
+    date: "6 Aug 2024",
+    image: "/img/certificates/udemy.jpg",
     link: "https://udemy.com/certificate/123"
   },
   {
-    title: "React Advanced Concepts",
-    issuer: "Coursera",
-    date: "2023",
-    image: "/img/certificates/react.jpg",
+    title: "Data Visualization",
+    issuer: "TATA",
+    date: "12 Aug 2024",
+    image: "/img/certificates/tata.jpg",
     link: "https://coursera.org/certificate/456"
   },
   {
-    title: "Node.js Backend Development",
-    issuer: "freeCodeCamp",
+    title: "AI/ML for Geodata Analysis",
+    issuer: "ISRO",
     date: "2023",
-    image: "/img/certificates/nodejs.jpg",
+    image: "/img/certificates/isro.jpg",
     link: "https://freecodecamp.org/certificate/789"
   },
   {
-    title: "Python for Data Science",
-    issuer: "DataCamp",
+    title: "Problem solving through Programming in C",
+    issuer: "IIT KHARAGPUR",
     date: "2023",
-    image: "/img/certificates/python.jpg",
+    image: "/img/certificates/C.jpg",
     link: "https://datacamp.com/certificate/101"
   },
   {

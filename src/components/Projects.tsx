@@ -14,33 +14,33 @@ const projects = {
       demo: "https://bastiramjimithaiwale.vercel.app/"
     },
     {
-      title: "AI Chat Application",
-      description: "Real-time chat application with AI-powered responses and user authentication.",
+      title: "Craftory Studio",
+      description: "A creative agency website showcasing portfolio and services with a modern design.",
       image: "/projects/placeholder-dark.jpg",
-      tags: ["React", "Node.js", "Socket.io", "OpenAI"],
-      link: "https://github.com/yourusername/ai-chat",
-      demo: "https://ai-chat-demo.com"
+      tags: ["HTML", "CSS", "JavaScript", "SQL"],
+      link: "https://github.com/kushalmahawar2005/Craftory-Studio.git",
+      demo: "https://craftory-studio.vercel.app/"
     },
     {
       title: "Portfolio Website",
       description: "Interactive portfolio website with 3D animations and modern UI design.",
       image: "/projects/placeholder-dark.jpg",
       tags: ["Next.js", "Three.js", "Framer Motion", "TailwindCSS"],
-      link: "https://github.com/kushalmahawar2005/Kushal_Portfolio",
-      demo: "https://kushal-portfolio-one.vercel.app"
+      link: "https://github.com/kushalmahawar2005/Kushal_Portfolio.git",
+      demo: "https://kushalmahawar.live"
     }
   ],
   minor: [
     {
-      title: "Task Management System",
-      description: "A collaborative task management system with real-time updates and team features.",
-      image: "/projects/placeholder-dark.jpg",
-      tags: ["React", "Firebase", "Material-UI", "Redux"],
-      link: "https://github.com/yourusername/task-manager",
-      demo: "https://task-manager-demo.com"
+      title: "Amazon Clone",
+      description: "A clone of Amazon's e-commerce platform with product listings and cart functionality.",
+      image: "/projects/amazon-clone.jpg",
+      tags: ["HTML", "CSS", "JavaScript"],
+      link: "https://github.com/kushalmahawar2005/Amazon-clone.git",
+      demo: "https://kushalproject.vercel.app/"
     },
     {
-      title: "Weather Dashboard",
+      title: "Weather Dashboard (Working on it)",
       description: "Real-time weather information dashboard with location-based forecasts.",
       image: "/projects/placeholder-dark.jpg",
       tags: ["React", "OpenWeather API", "Chart.js", "Geolocation"],
@@ -48,12 +48,12 @@ const projects = {
       demo: "https://weather-dashboard-demo.com"
     },
     {
-      title: "Recipe Finder",
-      description: "Search and discover recipes with ingredient-based filtering and favorites.",
+      title: "Tic-Tac-toc",
+      description: "A simple Tic-Tac-Toe game with a clean UI and basic AI opponent.",
       image: "/projects/placeholder-dark.jpg",
-      tags: ["React", "Edamam API", "LocalStorage", "CSS Modules"],
-      link: "https://github.com/yourusername/recipe-finder",
-      demo: "https://recipe-finder-demo.com"
+      tags: ["hTML" , "CSS", "JavaScript"],
+      link: "https://github.com/kushalmahawar2005/tic-tac-toe-game.git",
+      demo: "https://tic-tac-toe-game-a34f.vercel.app/"
     }
   ]
 }
