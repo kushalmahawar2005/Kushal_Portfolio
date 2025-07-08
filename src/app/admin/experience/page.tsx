@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Plus, 
   Search, 
@@ -9,40 +9,7 @@ import {
   ArrowUpDown,
   X
 } from 'lucide-react'
-
-// Sample data - replace with your actual data
-const experiences = [
-  {
-    id: 1,
-    title: 'Senior Frontend Developer',
-    company: 'Tech Corp',
-    location: 'New York, NY',
-    startDate: '2022-01',
-    endDate: 'Present',
-    description: 'Leading frontend development team...',
-    type: 'Full-time',
-  },
-  {
-    id: 2,
-    title: 'Full Stack Developer',
-    company: 'Startup Inc',
-    location: 'San Francisco, CA',
-    startDate: '2020-06',
-    endDate: '2021-12',
-    description: 'Developed full stack applications...',
-    type: 'Full-time',
-  },
-  {
-    id: 3,
-    title: 'Web Developer',
-    company: 'Digital Agency',
-    location: 'Remote',
-    startDate: '2019-01',
-    endDate: '2020-05',
-    description: 'Built responsive websites...',
-    type: 'Contract',
-  },
-]
+import { toast } from '@/hooks/use-toast'
 
 const types = ['All', 'Full-time', 'Part-time', 'Contract', 'Freelance']
 
@@ -54,7 +21,27 @@ export default function ExperiencePage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [selectedExperience, setSelectedExperience] = useState<any>(null)
-  const [localExperiences, setLocalExperiences] = useState(experiences)
+  const [localExperiences, setLocalExperiences] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchExperiences() {
+      setLoading(true)
+      setError(null)
+      try {
+        const res = await fetch('/api/experience')
+        if (!res.ok) throw new Error('Failed to fetch experiences')
+        const data = await res.json()
+        setLocalExperiences(data)
+      } catch (err: any) {
+        setError(err.message || 'Error fetching experiences')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchExperiences()
+  }, [])
 
   // Filter and sort experiences
   const filteredExperiences = localExperiences
@@ -83,12 +70,21 @@ export default function ExperiencePage() {
     }
   }
 
-  const handleAddExperience = (newExperience: any) => {
-    const experience = {
-      id: localExperiences.length + 1,
-      ...newExperience,
+  const handleAddExperience = async (newExperience: any) => {
+    try {
+      const res = await fetch('/api/experience', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newExperience),
+      })
+      if (!res.ok) throw new Error('Failed to add experience')
+      const added = await res.json()
+      setLocalExperiences([added, ...localExperiences])
+      toast({ title: 'Experience added!' })
+      setIsAddModalOpen(false)
+    } catch (err: any) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' })
     }
-    setLocalExperiences([experience, ...localExperiences])
   }
 
   const handleEditExperience = (experience: any) => {
@@ -96,18 +92,45 @@ export default function ExperiencePage() {
     setIsEditModalOpen(true)
   }
 
-  const handleUpdateExperience = (updatedExperience: any) => {
-    setLocalExperiences(localExperiences.map(e => 
-      e.id === updatedExperience.id ? updatedExperience : e
-    ))
-    setIsEditModalOpen(false)
-    setSelectedExperience(null)
+  const handleUpdateExperience = async (updatedExperience: any) => {
+    try {
+      const res = await fetch('/api/experience', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedExperience),
+      })
+      if (!res.ok) throw new Error('Failed to update experience')
+      setLocalExperiences(localExperiences.map(e => e.id === updatedExperience.id ? updatedExperience : e))
+      toast({ title: 'Experience updated!' })
+      setIsEditModalOpen(false)
+      setSelectedExperience(null)
+    } catch (err: any) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' })
+    }
   }
 
-  const handleDeleteExperience = (experienceId: number) => {
-    if (window.confirm('Are you sure you want to delete this experience?')) {
+  const handleDeleteExperience = async (experienceId: number) => {
+    if (!window.confirm('Are you sure you want to delete this experience?')) return
+    try {
+      const res = await fetch('/api/experience', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: experienceId }),
+      })
+      if (!res.ok) throw new Error('Failed to delete experience')
       setLocalExperiences(localExperiences.filter(e => e.id !== experienceId))
+      toast({ title: 'Experience deleted!' })
+    } catch (err: any) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' })
     }
+  }
+
+  if (loading) {
+    return <div className="text-center py-8">Loading experiences...</div>
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>
   }
 
   return (
