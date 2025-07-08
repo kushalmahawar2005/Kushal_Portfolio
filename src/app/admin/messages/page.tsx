@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Search, 
   Trash, 
@@ -10,44 +10,33 @@ import {
   Mail
 } from 'lucide-react'
 
-// Sample data - replace with your actual data
-const messages = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    subject: 'Job Opportunity',
-    message: 'I would like to discuss a potential job opportunity...',
-    date: '2024-03-15',
-    read: false,
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    subject: 'Project Collaboration',
-    message: 'I am interested in collaborating on a project...',
-    date: '2024-03-14',
-    read: true,
-  },
-  {
-    id: 3,
-    name: 'Mike Johnson',
-    email: 'mike@example.com',
-    subject: 'Portfolio Feedback',
-    message: 'I really like your portfolio work...',
-    date: '2024-03-13',
-    read: false,
-  },
-]
-
 export default function MessagesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [sortField, setSortField] = useState('date')
   const [sortDirection, setSortDirection] = useState('desc')
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [selectedMessage, setSelectedMessage] = useState<any>(null)
-  const [localMessages, setLocalMessages] = useState(messages)
+  const [localMessages, setLocalMessages] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchMessages() {
+      setLoading(true)
+      setError(null)
+      try {
+        const res = await fetch('/api/contact')
+        if (!res.ok) throw new Error('Failed to fetch messages')
+        const data = await res.json()
+        setLocalMessages(data)
+      } catch (err: any) {
+        setError(err.message || 'Error fetching messages')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchMessages()
+  }, [])
 
   // Filter and sort messages
   const filteredMessages = localMessages
@@ -88,6 +77,14 @@ export default function MessagesPage() {
     if (window.confirm('Are you sure you want to delete this message?')) {
       setLocalMessages(localMessages.filter(m => m.id !== messageId))
     }
+  }
+
+  if (loading) {
+    return <div className="text-center py-8">Loading messages...</div>
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>
   }
 
   return (

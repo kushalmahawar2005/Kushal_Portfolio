@@ -3,6 +3,7 @@ import './globals.css'
 import { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/react"
 import LayoutWrapper from '@/components/LayoutWrapper'
+import { Providers } from './providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+        <Providers>
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
+        </Providers>
         <Analytics />
       </body>
     </html>

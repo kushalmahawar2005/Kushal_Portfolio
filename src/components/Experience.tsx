@@ -53,26 +53,16 @@ export const Experience = () => {
   return (
     <section id="experience" className="py-20 bg-gradient-to-br from-black/40 to-gray-900/80 relative">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
-              Experience
-            </span>
-          </h2>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4 text-white">Experience</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             My professional journey so far — a timeline of roles, companies, and growth.
           </p>
-        </motion.div>
+        </div>
         <div className="relative flex flex-col items-center">
           {/* Timeline vertical line */}
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 opacity-20 rounded-full -translate-x-1/2 z-0" />
-          <div className="space-y-12 w-full max-w-2xl z-10">
+          <div className="absolute left-1/2 top-0 h-full w-1 bg-neutral-800 opacity-30 rounded-full -translate-x-1/2 z-0" />
+          <div className="flex flex-col gap-20 w-full max-w-md mx-auto z-10">
             {experiences.map((exp, idx) => (
               <motion.div
                 key={exp.id}
@@ -80,45 +70,46 @@ export const Experience = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.12 }}
                 viewport={{ once: true }}
-                className={`relative bg-white/10 dark:bg-black/60 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/10 transition-all duration-300 ${idx % 2 === 0 ? 'ml-0 md:ml-24' : 'mr-0 md:mr-24'}`}
-                style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.18)' }}
+                className="relative flex flex-col items-center"
               >
                 {/* Timeline dot with company logo or initials */}
-                <span className="absolute left-1/2 -top-7 w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg border-4 border-white/20 -translate-x-1/2 z-20">
+                <span className="z-20 w-14 h-14 flex items-center justify-center bg-white border-4 border-neutral-200 shadow-lg rounded-xl mb-[-28px]">
                   {exp.logo ? (
                     <Image
                       src={exp.logo}
                       alt={exp.company + ' logo'}
-                      width={44}
-                      height={44}
-                      className="object-cover rounded-lg bg-white/80"
+                      width={48}
+                      height={48}
+                      className="object-cover rounded-lg bg-white"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                     />
                   ) : (
-                    <span className="text-white text-xl font-bold select-none">
+                    <span className="text-neutral-700 text-2xl font-bold select-none">
                       {getInitials(exp.company)}
                     </span>
                   )}
                 </span>
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mt-2">
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-1 drop-shadow-lg">{exp.title}</h3>
-                    <p className="text-blue-400 font-medium">{exp.company} <span className="text-gray-400">({exp.location})</span></p>
+                <div className="bg-neutral-900 border border-neutral-800 rounded-xl shadow-md p-8 w-full mt-0 text-left">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-1">{exp.title}</h3>
+                      <p className="text-blue-400 font-medium">{exp.company} <span className="text-gray-400">({exp.location})</span></p>
+                    </div>
+                    <span className="text-sm text-gray-400 font-mono">{exp.startDate} - {exp.endDate}</span>
                   </div>
-                  <span className="text-sm text-gray-400 font-mono">{exp.startDate} - {exp.endDate}</span>
-                </div>
-                <p className="mt-4 text-gray-300">{exp.description}</p>
-                {/* Tech stack tags */}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {exp.tech.map((t) => (
-                    <span key={t} className="px-3 py-1 text-xs rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white/90 shadow-sm font-semibold">
-                      {t}
-                    </span>
-                  ))}
+                  <p className="mt-4 text-gray-300">{exp.description}</p>
+                  {/* Tech stack tags */}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {exp.tech.map((t) => (
+                      <span key={t} className="px-3 py-1 text-xs rounded-full bg-neutral-800 text-white/90 border border-neutral-700 font-semibold">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 {/* Timeline connector dot (bottom) */}
                 {idx !== experiences.length - 1 && (
-                  <span className="absolute left-1/2 -bottom-6 w-4 h-4 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full border-4 border-white/20 -translate-x-1/2 z-10" />
+                  <span className="absolute left-1/2 -bottom-8 w-4 h-4 bg-neutral-800 rounded-full border-4 border-white -translate-x-1/2 z-10" />
                 )}
               </motion.div>
             ))}

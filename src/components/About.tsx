@@ -125,7 +125,7 @@ export default function About() {
             
             <div className="flex flex-wrap gap-4 pt-4">
               <motion.a
-                href="/resume.pdf"
+                href="/My Resume.pdf"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
