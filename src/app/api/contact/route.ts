@@ -69,3 +69,33 @@ export async function GET() {
     return NextResponse.json([], { status: 200 })
   }
 } 
+
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json()
+    const { id, read } = body as { id: number; read?: boolean }
+    const file = await fs.readFile(MESSAGES_PATH, 'utf-8').catch(() => '[]')
+    const messages = JSON.parse(file)
+    const idx = messages.findIndex((m: any) => m.id === id)
+    if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    messages[idx] = { ...messages[idx], ...(read !== undefined ? { read } : {}) }
+    await fs.writeFile(MESSAGES_PATH, JSON.stringify(messages, null, 2), 'utf-8')
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update message' }, { status: 500 })
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const body = await req.json()
+    const { id } = body as { id: number }
+    const file = await fs.readFile(MESSAGES_PATH, 'utf-8').catch(() => '[]')
+    const messages = JSON.parse(file)
+    const next = messages.filter((m: any) => m.id !== id)
+    await fs.writeFile(MESSAGES_PATH, JSON.stringify(next, null, 2), 'utf-8')
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to delete message' }, { status: 500 })
+  }
+}

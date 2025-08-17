@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
   if (isLoginPath && adminToken) {
     try {
       // Verify JWT token
-      const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+  const JWT_SECRET = process.env.JWT_SECRET || 'hi'
       const secret = new TextEncoder().encode(JWT_SECRET)
       await jwtVerify(adminToken.value, secret)
       return NextResponse.redirect(new URL('/admin/dashboard', request.url))
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   // For admin paths (except login), verify the token
   if (isAdminPath && !isLoginPath && adminToken) {
     try {
-      const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+  const JWT_SECRET = process.env.JWT_SECRET || 'hi'
       const secret = new TextEncoder().encode(JWT_SECRET)
       await jwtVerify(adminToken.value, secret)
     } catch {

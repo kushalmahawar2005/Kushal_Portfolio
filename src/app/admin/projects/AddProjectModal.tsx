@@ -15,8 +15,8 @@ export default function AddProjectModal({ isOpen, onClose, onSubmit, initialData
     id: '',
     title: '',
     description: '',
-    category: 'Web Development',
-    status: 'Draft',
+  category: 'Major',
+  status: 'Completed',
     image: '',
     tags: [] as string[],
     demoUrl: '',
@@ -48,8 +48,8 @@ export default function AddProjectModal({ isOpen, onClose, onSubmit, initialData
         id: '',
         title: '',
         description: '',
-        category: 'Web Development',
-        status: 'Draft',
+  category: 'Major',
+  status: 'Completed',
         image: '',
         tags: [],
         demoUrl: '',
@@ -170,10 +170,8 @@ export default function AddProjectModal({ isOpen, onClose, onSubmit, initialData
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
               >
-                <option value="Web Development">Web Development</option>
-                <option value="Mobile Development">Mobile Development</option>
-                <option value="UI/UX Design">UI/UX Design</option>
-                <option value="Other">Other</option>
+                <option value="Major">Major</option>
+                <option value="Minor">Minor</option>
               </select>
             </div>
             <div>
@@ -186,8 +184,8 @@ export default function AddProjectModal({ isOpen, onClose, onSubmit, initialData
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                 className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
               >
-                <option value="Draft">Draft</option>
-                <option value="Published">Published</option>
+                <option value="Completed">Completed</option>
+                <option value="In Progress">In Progress</option>
               </select>
             </div>
           </div>

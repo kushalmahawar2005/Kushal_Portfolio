@@ -14,17 +14,17 @@ const projects = {
       demo: "https://bastiramjimithaiwale.vercel.app/"
     },
     {
-      title: "Craftory Studio",
-      description: "A creative agency website showcasing portfolio and services with a modern design.",
-      image: "/projects/placeholder-dark.jpg",
-      tags: ["HTML", "CSS", "JavaScript", "SQL"],
-      link: "https://github.com/kushalmahawar2005/Craftory-Studio.git",
-      demo: "https://craftory-studio.vercel.app/"
+      title: "Clothify",
+      description: "Built a clothing e-commerce platform with product showcase, shopping cart, and seamless user experience.",
+      image: "/img/projects/clothify.png",
+      tags: ["React Js", "Tailwind CSS", "MongoDb" ],
+      link: "https://github.com/kushalmahawar2005/Clothify.git",
+      demo: "https://clothify-flax.vercel.app/"
     },
     {
       title: "Portfolio Website",
       description: "Interactive portfolio website with 3D animations and modern UI design.",
-      image: "/projects/placeholder-dark.jpg",
+      image: "/img/projects/portfolio.png",
       tags: ["Next.js", "Three.js", "Framer Motion", "TailwindCSS"],
       link: "https://github.com/kushalmahawar2005/Kushal_Portfolio.git",
       demo: "https://kushalmahawar.live"
@@ -32,20 +32,20 @@ const projects = {
   ],
   minor: [
     {
-      title: "Amazon Clone",
-      description: "A clone of Amazon's e-commerce platform with product listings and cart functionality.",
-      image: "/projects/amazon-clone.jpg",
-      tags: ["HTML", "CSS", "JavaScript"],
-      link: "https://github.com/kushalmahawar2005/Amazon-clone.git",
-      demo: "https://kushalproject.vercel.app/"
+      title: "Food Factory Web",
+      description: "A food delivery web application with restaurant listings, menu browsing, and online ordering functionality.",
+      image: "/img/projects/food_factory.png",
+      tags: ["React Js", "Tailwind Css", "JavaScript"],
+      link: "https://github.com/kushalmahawar2005/Food-Factory-Web.git",
+      demo: "https://foodfactoryy.vercel.app/"
     },
     {
-      title: "Weather Dashboard (Working on it)",
-      description: "Real-time weather information dashboard with location-based forecasts.",
-      image: "/projects/placeholder-dark.jpg",
-      tags: ["React", "OpenWeather API", "Chart.js", "Geolocation"],
-      link: "https://github.com/yourusername/weather-dashboard",
-      demo: "https://weather-dashboard-demo.com"
+      title: "ManKiBaat",
+      description: "A platform where users can share their thoughts, ideas, and opinions openly with others.",
+      image: "/img/projects/mankibaat.png",
+      tags: ["React", "Restfull Api's","Firebase"],
+      link: "https://github.com/kushalmahawar2005/ManKiBaat.git",
+      demo: "https://mankibaat.vercel.app/"
     },
     {
       title: "Tic-Tac-toc",
@@ -55,6 +55,7 @@ const projects = {
       link: "https://github.com/kushalmahawar2005/tic-tac-toe-game.git",
       demo: "https://tic-tac-toe-game-a34f.vercel.app/"
     }
+   
   ]
 }
 

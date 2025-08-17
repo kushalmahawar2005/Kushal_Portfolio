@@ -17,15 +17,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    // Check if admin_token cookie exists
-    const checkAuth = () => {
-      const cookies = document.cookie.split(';')
-      const hasAdminToken = cookies.some(cookie => cookie.trim().startsWith('admin_token='))
-      setIsAuthenticated(hasAdminToken)
+    // Server-verified auth check
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/admin/status', { cache: 'no-store' })
+        if (res.ok) {
+          const data = await res.json()
+          setIsAuthenticated(!!data.isAuthenticated)
+        } else {
+          setIsAuthenticated(false)
+        }
+      } catch {
+        setIsAuthenticated(false)
+      } finally {
+        setIsLoading(false)
+      }
     }
-    
+
     checkAuth()
-    setIsLoading(false)
   }, [])
 
   const login = async (email: string, password: string) => {
@@ -51,8 +60,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      // Clear the admin_token cookie
-      document.cookie = 'admin_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  // Call API to clear httpOnly cookie
+  await fetch('/api/admin/logout', { method: 'POST' })
       setIsAuthenticated(false)
       router.push('/admin/login')
     } catch (error) {

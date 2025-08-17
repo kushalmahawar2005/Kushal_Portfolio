@@ -71,11 +71,28 @@ export default function MessagesPage() {
     setLocalMessages(localMessages.map(m => 
       m.id === message.id ? { ...m, read: true } : m
     ))
+    // Persist read state
+    fetch('/api/contact', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: message.id, read: true })
+    }).catch(() => {})
   }
 
-  const handleDeleteMessage = (messageId: number) => {
-    if (window.confirm('Are you sure you want to delete this message?')) {
-      setLocalMessages(localMessages.filter(m => m.id !== messageId))
+  const handleDeleteMessage = async (messageId: number) => {
+    if (!window.confirm('Are you sure you want to delete this message?')) return
+    const prev = localMessages
+    setLocalMessages(localMessages.filter(m => m.id !== messageId))
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: messageId })
+      })
+      if (!res.ok) throw new Error('Failed')
+    } catch {
+      // revert on failure
+      setLocalMessages(prev)
     }
   }
 

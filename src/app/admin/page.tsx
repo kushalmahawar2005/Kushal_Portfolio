@@ -9,6 +9,7 @@ export default function AdminPage() {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
+     
     if (isAuthenticated) {
       router.replace('/admin/dashboard')
     } else {
@@ -16,5 +17,6 @@ export default function AdminPage() {
     }
   }, [isAuthenticated, router])
 
-  return null
+  return <div>Redirecting...</div>
+
 } 

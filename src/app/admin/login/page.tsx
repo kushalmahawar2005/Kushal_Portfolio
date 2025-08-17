@@ -18,7 +18,9 @@ export default function AdminLogin() {
   // If already authenticated, redirect to dashboard
   if (isAuthenticated) {
     router.replace('/admin/dashboard')
-    return null
+    console.log('isAuthenticated:', isAuthenticated)
+    return <div>Redirecting...</div>
+
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

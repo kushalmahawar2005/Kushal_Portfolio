@@ -310,7 +310,29 @@ export default function ExperiencePage() {
               </p>
             </div>
 
-            <form className="space-y-6">
+            <form 
+              className="space-y-6"
+              onSubmit={async (e) => {
+                e.preventDefault()
+                const form = e.currentTarget as HTMLFormElement
+                const get = (id: string) => (form.querySelector(`#${id}`) as HTMLInputElement | HTMLTextAreaElement).value
+                const payload: any = {
+                  title: get('title'),
+                  company: get('company'),
+                  location: get('location'),
+                  type: (form.querySelector('#type') as HTMLSelectElement).value,
+                  startDate: get('startDate'),
+                  endDate: get('endDate') || 'Present',
+                  description: get('description'),
+                }
+                if (isEditModalOpen && selectedExperience) {
+                  payload.id = selectedExperience.id
+                  await handleUpdateExperience(payload)
+                } else {
+                  await handleAddExperience(payload)
+                }
+              }}
+            >
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Job Title

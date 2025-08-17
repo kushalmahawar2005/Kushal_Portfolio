@@ -38,10 +38,18 @@ export function usePortfolio() {
   // Add new item
   const addItem = async (type: keyof PortfolioData, itemData: any) => {
     try {
+      // Map plural keys to API singular types
+      const typeMap: Record<keyof PortfolioData, string> = {
+        projects: 'project',
+        skills: 'skill',
+        experience: 'experience',
+        certificates: 'certificate',
+        messages: 'message',
+      }
       const response = await fetch('/api/portfolio', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, data: itemData })
+        body: JSON.stringify({ type: typeMap[type], data: itemData })
       })
       if (!response.ok) throw new Error('Failed to add item')
       await fetchData() // Refresh data
@@ -55,10 +63,17 @@ export function usePortfolio() {
   // Update item
   const updateItem = async (type: keyof PortfolioData, id: number, itemData: any) => {
     try {
+      const typeMap: Record<keyof PortfolioData, string> = {
+        projects: 'project',
+        skills: 'skill',
+        experience: 'experience',
+        certificates: 'certificate',
+        messages: 'message',
+      }
       const response = await fetch('/api/portfolio', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, id, data: itemData })
+        body: JSON.stringify({ type: typeMap[type], id, data: itemData })
       })
       if (!response.ok) throw new Error('Failed to update item')
       await fetchData() // Refresh data
@@ -72,7 +87,14 @@ export function usePortfolio() {
   // Delete item
   const deleteItem = async (type: keyof PortfolioData, id: number) => {
     try {
-      const response = await fetch(`/api/portfolio?type=${type}&id=${id}`, {
+      const typeMap: Record<keyof PortfolioData, string> = {
+        projects: 'project',
+        skills: 'skill',
+        experience: 'experience',
+        certificates: 'certificate',
+        messages: 'message',
+      }
+      const response = await fetch(`/api/portfolio?type=${typeMap[type]}&id=${id}`, {
         method: 'DELETE'
       })
       if (!response.ok) throw new Error('Failed to delete item')

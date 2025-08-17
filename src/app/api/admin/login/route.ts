@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import { SignJWT } from 'jose'
 import { cookies } from 'next/headers'
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin@example.com'
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-this-in-production'
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'kushalmahawar71@gmail.com'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Kbmbjy11'
+const JWT_SECRET = process.env.JWT_SECRET || 'hi'
 
 export async function POST(request: Request) {
   try {
