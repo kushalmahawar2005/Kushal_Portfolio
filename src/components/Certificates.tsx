@@ -6,12 +6,28 @@ import { useState } from 'react'
 
 const certificates = [
   {
+    title: "Mern Stack Training Certification",
+    issuer: "Zeetron Network Pvt. Ltd.",
+    date: "16 June - 14 Aug 2025",
+    image: "/img/certificates/ZeetronNetworks.jpg",
+    link: "https://www.zeetronnetworks.com/"
+  },
+
+  {
     title: "JavaScript, jQuery and React Bootcamp",
     issuer: "Udemy",
     date: "6 Aug 2024",
     image: "/img/certificates/udemy.jpg",
     link: "https://udemy.com/certificate/123"
   },
+  {
+    title: "Problem solving through Programming in C",
+    issuer: "IIT KHARAGPUR",
+    date: "2023",
+    image: "/img/certificates/C.jpg",
+    link: "https://datacamp.com/certificate/101"
+  },
+
   {
     title: "Data Visualization",
     issuer: "TATA",
@@ -27,34 +43,22 @@ const certificates = [
     link: "https://freecodecamp.org/certificate/789"
   },
   {
-    title: "Problem solving through Programming in C",
-    issuer: "IIT KHARAGPUR",
-    date: "2023",
-    image: "/img/certificates/C.jpg",
-    link: "https://datacamp.com/certificate/101"
+    title: "Java Training",
+    issuer: "IIT Bombay (Spoken Tutorial Project)",
+    date: "May 2025",
+    image: "/img/certificates/Java.jpg",
+    link: "https://spoken-tutorial.org"
   },
-  {
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    date: "2023",
-    image: "/img/certificates/aws.jpg",
-    link: "https://aws.amazon.com/certificate/102"
-  },
-  {
-    title: "Machine Learning Fundamentals",
-    issuer: "Stanford Online",
-    date: "2023",
-    image: "/img/certificates/ml.jpg",
-    link: "https://stanford.edu/certificate/103"
-  }
+
+
 ]
 
-const CertificateModal = ({ 
-  certificate, 
-  onClose 
-}: { 
-  certificate: typeof certificates[0], 
-  onClose: () => void 
+const CertificateModal = ({
+  certificate,
+  onClose
+}: {
+  certificate: typeof certificates[0],
+  onClose: () => void
 }) => {
   return (
     <motion.div
@@ -89,7 +93,7 @@ const CertificateModal = ({
             />
           </svg>
         </button>
-        
+
         <div className="relative h-[70vh] w-full">
           <Image
             src={certificate.image}
@@ -98,7 +102,7 @@ const CertificateModal = ({
             className="object-contain"
           />
         </div>
-        
+
         <div className="p-6 bg-gradient-to-t from-black to-transparent">
           <h3 className="text-xl font-semibold mb-2">{certificate.title}</h3>
           <p className="text-gray-400 mb-4">
@@ -131,12 +135,12 @@ const CertificateModal = ({
   )
 }
 
-const CertificateCard = ({ 
-  certificate, 
-  onClick 
-}: { 
-  certificate: typeof certificates[0], 
-  onClick: () => void 
+const CertificateCard = ({
+  certificate,
+  onClick
+}: {
+  certificate: typeof certificates[0],
+  onClick: () => void
 }) => {
   return (
     <motion.div
@@ -155,7 +159,7 @@ const CertificateCard = ({
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-        
+
         <div className="absolute inset-0 p-6 flex flex-col justify-end">
           <h3 className="text-xl font-semibold mb-2">{certificate.title}</h3>
           <p className="text-gray-400 text-sm">
