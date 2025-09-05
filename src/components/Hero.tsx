@@ -126,7 +126,7 @@ export const Hero = () => {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Admin Link */}
+      {/* Admin Link
       <motion.a
         href="/admin/login"
         className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
@@ -154,7 +154,7 @@ export const Hero = () => {
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
         style={{ background: 'linear-gradient(to bottom right, #0f1729, #1a1f35)' }}
-      />
+      /> */}
 
       {/* Main content */}
       <div className="relative z-10 text-center">
@@ -164,7 +164,7 @@ export const Hero = () => {
           transition={{ duration: 1, type: 'spring' }}
           className="mb-8"
         >
-          <div className="w-40 h-40 mx-auto rounded-full border-4 border-blue-500/30 p-2">
+          <div className="w-40 h-40 mx-auto rounded-full border-4 border-blue-500/30 p-2 mb-10">
             <div className="w-full h-full rounded-full border-4 border-blue-400/40 p-2">
               <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <span className="text-4xl">KM</span>
@@ -174,12 +174,12 @@ export const Hero = () => {
         </motion.div>
 
         <motion.h1
-          className="text-5xl md:text-7xl font-bold mb-6"
+          className="text-3xl md:text-5xl font-bold mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">Kushal Mahawar</span>
+          Hi, I'm <span className="text-transparent bg-clip-text text-white  ">Kushal Mahawar</span>
         </motion.h1>
 
         <motion.div
@@ -213,7 +213,7 @@ export const Hero = () => {
         >
           <motion.a
             href="#contact"
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
