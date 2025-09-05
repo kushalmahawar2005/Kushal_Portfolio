@@ -31,7 +31,7 @@ export const Skills = () => {
     <section id="skills" className="py-20 bg-black text-center">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold mb-12">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+          <span className="text-white bg-clip-text ">
             Skills
           </span>
         </h2>
