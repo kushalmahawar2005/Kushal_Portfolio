@@ -92,7 +92,7 @@ export const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+  <section id="contact" className="py-14 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-blue-900/10 to-purple-900/10" />
       
@@ -118,7 +118,7 @@ export const Contact = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+  <div className="container mx-auto px-3 sm:px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -136,14 +136,14 @@ export const Contact = () => {
           </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+  <div className="max-w-2xl sm:max-w-3xl md:max-w-4xl mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-white/5 p-8 rounded-2xl backdrop-blur-sm"
+            className="bg-white/5 p-5 sm:p-7 md:p-8 rounded-2xl backdrop-blur-sm min-w-0"
           >
             <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-6">
@@ -184,9 +184,9 @@ export const Contact = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="bg-white/5 p-8 rounded-2xl backdrop-blur-sm"
+            className="bg-white/5 p-5 sm:p-7 md:p-8 rounded-2xl backdrop-blur-sm min-w-0"
           >
-            <div className="space-y-6">
+            <div className="space-y-5 sm:space-y-6">
               <motion.div variants={inputVariants} whileFocus="focus">
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
                   Name
@@ -198,7 +198,8 @@ export const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors"
+                  autoComplete="name"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/10 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-base"
                 />
               </motion.div>
 
@@ -213,7 +214,8 @@ export const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors"
+                  autoComplete="email"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/10 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-base"
                 />
               </motion.div>
 
@@ -228,14 +230,14 @@ export const Contact = () => {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/10 border border-white/10 rounded-xl focus:outline-none focus:border-blue-500 transition-colors resize-none text-base"
                 />
               </motion.div>
 
               <motion.button
                 type="submit"
                 disabled={submitted}
-                className={`w-full py-3 px-6 rounded-xl font-medium transition-all ${
+                className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-medium transition-all text-base ${
                   submitted
                     ? 'bg-gray-600 cursor-not-allowed'
                     : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/25'
