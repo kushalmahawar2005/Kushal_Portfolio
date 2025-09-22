@@ -132,6 +132,7 @@ export default function About() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                
                 <FiDownload className="w-5 h-5" />
                 Download Resume
               </motion.a>
